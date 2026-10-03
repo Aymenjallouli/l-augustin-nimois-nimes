@@ -1,0 +1,970 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L'Augustin Nîmois, pâtisserie artisanale à Nîmes</title>
+<meta name="description" content="Le gâteau nîmois moulé en forme des Arènes, sucré ou salé. Stand aux Halles de Nîmes, allée du Cumin. Horaires, accès et contact.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="L'Augustin Nîmois, pâtisserie artisanale à Nîmes">
+<meta property="og:description" content="Les Arènes de Nîmes, moulées en gâteau. Sucré ou salé, au stand des Halles de Nîmes, allée du Cumin.">
+<meta name="theme-color" content="#A23A1E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23A23A1E'/%3E%3Cpath d='M17 50V31a15 15 0 0 1 30 0v19' fill='none' stroke='%23FBF3E6' stroke-width='4'/%3E%3Cpath d='M26 50V36a6 6 0 0 1 12 0v14' fill='none' stroke='%23FBF3E6' stroke-width='4'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,400&family=Figtree:wght@400;600&display=swap">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Bakery",
+  "name": "L'Augustin Nîmois",
+  "description": "Pâtisserie artisanale : gâteau nîmois moulé en forme des Arènes de Nîmes, en versions sucrées et salées. Stand aux Halles de Nîmes.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Allée du Cumin, Rue Guizot",
+    "postalCode": "30000",
+    "addressLocality": "Nîmes",
+    "addressCountry": "FR"
+  },
+  "telephone": "+33785858812",
+  "geo": { "@type": "GeoCoordinates", "latitude": 43.8390557, "longitude": 4.3584516 },
+  "hasMap": "https://www.google.com/maps/place/?q=place_id:ChIJJZuZufMttBIREHu3H1Rm8Fo",
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday", "Wednesday", "Thursday"], "opens": "08:00", "closes": "12:30" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday", "Saturday", "Sunday"], "opens": "07:30", "closes": "13:30" }
+  ],
+  "sameAs": ["https://www.facebook.com/augustin.nimois/"]
+}
+</script>
+<style>
+/* ──────────────────────────────────────────────────────────────────────────
+   DESIGN DECISIONS — L'Augustin Nîmois
+   • Data: no usable photo (the only Google picture shows another stall in
+     the Halles), no review text. So the page is typography-led, and its
+     image is drawn in code: the Arènes as a cake (SVG), plus an arcade
+     frieze. Roman numerals mark the sections, like an inscription.
+   • Palette: Nîmes limestone cream (--bg) and stone (--surface-2), dark
+     chocolate ink, brick/terracotta brand (the Arènes at sunset, the glaze
+     of fruits rouges), caramel accent (moelleux, crème brûlée). One strong
+     colour move: the brick "L'histoire" band, echoed by the hero arch.
+   • Type: Fraunces (soft, optical-size serif with a pastry-shop warmth)
+     for display, roman 500 + italic 400. Figtree 400/600 for text & UI.
+   • Hero: typographic poster. Big headline on the left; on the right a
+     tall brick arch, the cake drawn in front of it, a circular stamp.
+   • Rhythm: cream → stone (rating) → cream (the cake) → brick (story)
+     → cream (hours & map) → chocolate (contact + footer). Asymmetric
+     5/7 grids, one oversized moment per section (5,0 · flavours · phone).
+   ────────────────────────────────────────────────────────────────────────── */
+:root {
+  --bg: #F4ECDF;
+  --surface: #FBF7F0;
+  --surface-2: #EADFCB;
+  --ink: #2B1A12;
+  --ink-soft: #6A5446;
+  --brand: #A23A1E;
+  --brand-deep: #86301A;
+  --brand-ink: #FBF3E6;
+  --brand-tint: #F3DCCB;
+  --accent: #D9A35A;
+  --accent-light: #F2C98A;
+  --line: #DCCDB6;
+  --open: #1E6B45;
+
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --step--1: clamp(0.875rem, 0.85rem + 0.12vw, 0.95rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --step-1: clamp(1.15rem, 1.07rem + 0.4vw, 1.4rem);
+  --step-2: clamp(1.4rem, 1.24rem + 0.8vw, 1.9rem);
+  --step-3: clamp(1.7rem, 1.42rem + 1.4vw, 2.6rem);
+  --step-4: clamp(2.1rem, 1.62rem + 2.6vw, 3.8rem);
+  --step-5: clamp(2.6rem, 1.75rem + 4.4vw, 5.5rem);
+
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px; --space-5: 24px;
+  --space-6: 32px; --space-7: 48px; --space-8: 64px; --space-9: 96px;
+  --section: clamp(56px, 10vw, 128px);
+  --gutter: clamp(16px, 5vw, 40px);
+  --header-h: 64px;
+  --bar-h: 72px;
+
+  --r-sm: 10px; --r-md: 18px; --r-lg: 28px;
+  --shadow-1: 0 1px 2px rgb(43 26 18 / .06), 0 2px 8px rgb(43 26 18 / .06);
+  --shadow-2: 0 2px 4px rgb(43 26 18 / .05), 0 18px 40px -12px rgb(43 26 18 / .22);
+  --shadow-up: 0 -1px 0 rgb(43 26 18 / .06), 0 -10px 28px rgb(43 26 18 / .12);
+  --ease: cubic-bezier(.2, .7, .2, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--bg);
+  padding-bottom: calc(var(--bar-h) + env(safe-area-inset-bottom));
+  -webkit-font-smoothing: antialiased;
+}
+body.menu-open { overflow: hidden; }
+img, svg, iframe { display: block; max-width: 100%; }
+h1, h2, h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+p { margin: 0; text-wrap: pretty; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+a { color: inherit; }
+em { font-style: italic; }
+:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; border-radius: 6px; }
+.on-dark :focus-visible { outline-color: var(--accent-light); }
+[id] { scroll-margin-top: calc(var(--header-h) + 16px); }
+
+.container {
+  width: 100%;
+  max-width: calc(1200px + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.section { padding-block: var(--section); }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+.skip {
+  position: fixed; left: 12px; top: -80px; z-index: 100;
+  display: inline-flex; align-items: center; min-height: 48px; padding: 0 20px;
+  background: var(--ink); color: var(--bg); border-radius: 999px; text-decoration: none; font-weight: 600;
+}
+.skip:focus { top: 12px; }
+
+.i { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.i-fill { fill: currentColor; stroke: none; }
+
+.eyebrow {
+  display: flex; align-items: center; gap: 12px;
+  font-size: var(--step--1); font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--brand);
+}
+.eyebrow::before { content: ""; width: 28px; height: 1.5px; background: currentColor; }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 24px;
+  border: 1.5px solid transparent; border-radius: 999px;
+  font: 600 var(--step-0)/1.1 var(--font-body);
+  text-decoration: none; white-space: nowrap;
+  transition: transform .25s var(--ease);
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+.btn-primary { background: var(--brand); color: var(--brand-ink); box-shadow: var(--shadow-1); }
+.btn-primary:hover { background: var(--brand-deep); }
+.btn-ghost { border-color: var(--ink); color: var(--ink); }
+.btn-ghost:hover { background: var(--ink); color: var(--bg); }
+.btn-light { background: var(--bg); color: var(--ink); }
+.btn-light:hover { background: #fff; }
+.btn-outline-light { border-color: rgb(251 243 230 / .45); color: var(--brand-ink); }
+.btn-outline-light:hover { border-color: var(--brand-ink); }
+
+/* Status pill (live open / closed) */
+.status {
+  display: inline-flex; align-items: center; gap: 10px;
+  min-height: 36px; padding: 6px 14px 6px 12px;
+  border: 1px solid var(--line); border-radius: 999px; background: var(--surface);
+  font-size: var(--step--1); font-weight: 600; color: var(--ink);
+}
+.status .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); flex: none; }
+.status[data-state="open"] .dot { background: var(--open); box-shadow: 0 0 0 4px rgb(30 107 69 / .15); }
+.status[data-state="closed"] .dot { background: var(--brand); }
+
+/* ── Header ── */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--bg);
+  border-bottom: 1px solid transparent;
+}
+.site-header.is-scrolled { border-bottom-color: var(--line); box-shadow: 0 6px 20px -14px rgb(43 26 18 / .35); }
+.header-inner { display: flex; align-items: center; gap: var(--space-4); height: var(--header-h); }
+.brand {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 44px; margin-right: auto;
+  font-family: var(--font-display); font-size: 1.25rem; line-height: 1; letter-spacing: -0.01em;
+  text-decoration: none;
+}
+.brand svg { width: 36px; height: 36px; }
+.brand em { font-weight: 400; color: var(--brand); }
+.nav-desktop { display: none; }
+.nav-desktop a {
+  display: inline-flex; align-items: center; min-height: 44px;
+  color: var(--ink-soft); text-decoration: none; font-weight: 600; font-size: var(--step--1);
+  background: linear-gradient(currentColor, currentColor) left calc(100% - 10px) / 0 1.5px no-repeat;
+}
+.nav-desktop a:hover { color: var(--ink); background-size: 100% 1.5px; }
+.header-cta { display: none; min-height: 44px; padding: 0 18px; font-size: var(--step--1); }
+.menu-toggle {
+  display: grid; place-items: center; width: 48px; height: 48px; padding: 0;
+  border: 1.5px solid var(--line); border-radius: 50%; background: var(--surface); color: var(--ink);
+  cursor: pointer;
+}
+.menu-toggle .i-close { display: none; }
+.menu-toggle[aria-expanded="true"] .i-open { display: none; }
+.menu-toggle[aria-expanded="true"] .i-close { display: block; }
+
+.menu {
+  position: fixed; inset: var(--header-h) 0 0; z-index: 40;
+  display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-6);
+  padding: var(--space-5) var(--gutter) calc(var(--space-6) + env(safe-area-inset-bottom));
+  background: var(--bg); overflow-y: auto;
+  opacity: 0; visibility: hidden; transform: translateY(-8px);
+  transition: opacity .3s var(--ease), transform .3s var(--ease), visibility 0s linear .3s;
+}
+.menu.is-open { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+.menu nav a {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+  padding: 14px 0; border-bottom: 1px solid var(--line);
+  font-family: var(--font-display); font-size: var(--step-3); line-height: 1.15; text-decoration: none;
+}
+.menu nav a span { font-family: var(--font-body); font-size: var(--step--1); font-weight: 600; letter-spacing: .12em; color: var(--brand); }
+.menu-foot { display: grid; gap: var(--space-3); color: var(--ink-soft); }
+.menu-foot .btn { width: 100%; }
+
+/* ── Hero ── */
+.hero { position: relative; overflow: hidden; padding-block: var(--space-5) var(--space-8); }
+.hero-grid { display: grid; gap: var(--space-7); align-items: center; }
+.hero h1 {
+  margin-top: var(--space-5);
+  font-size: var(--step-5); line-height: 1.02; letter-spacing: -0.03em; word-spacing: .04em;
+}
+.hero h1 em { display: block; font-weight: 400; color: var(--brand); }
+.lede { margin-top: var(--space-5); max-width: 36ch; font-size: var(--step-1); line-height: 1.5; color: var(--ink-soft); }
+.lede strong { color: var(--ink); font-weight: 600; }
+.rating-chip {
+  display: inline-flex; align-items: center; flex-wrap: wrap; gap: 4px 10px;
+  min-height: 44px; margin-top: var(--space-5); padding: 8px 16px;
+  border: 1px solid var(--line); border-radius: 999px; background: var(--surface);
+  text-decoration: none; font-size: var(--step--1); color: var(--ink-soft);
+  transition: transform .25s var(--ease);
+}
+.rating-chip:hover { transform: translateY(-2px); }
+.rating-chip strong { color: var(--ink); font-size: var(--step-0); }
+.stars { display: inline-flex; gap: 2px; color: var(--brand); }
+.stars .i { width: 16px; height: 16px; }
+.hero-ctas { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-5); }
+.hero-ctas .btn { flex: 1 1 auto; }
+
+.hero-art { position: relative; margin: 0; aspect-ratio: 1 / 1.1; max-width: 620px; width: 100%; justify-self: center; }
+.hero-arch {
+  position: absolute; top: 0; bottom: 30%; left: 14%; right: 14%;
+  border-radius: 999px 999px var(--r-sm) var(--r-sm);
+  background:
+    radial-gradient(120% 70% at 30% 18%, rgb(255 220 180 / .18), transparent 60%),
+    var(--brand);
+  box-shadow: var(--shadow-2);
+}
+.hero-arch::before {
+  content: ""; position: absolute; inset: 14px 14px 0;
+  border: 1.5px solid rgb(251 243 230 / .32); border-bottom: 0;
+  border-radius: 999px 999px 0 0;
+}
+.hero-arch::after {
+  content: ""; position: absolute; inset: 34px 34px 0;
+  border: 1px solid rgb(251 243 230 / .16); border-bottom: 0;
+  border-radius: 999px 999px 0 0;
+}
+.cake { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: auto; }
+.stamp {
+  position: absolute; top: 2%; right: 2%; width: clamp(92px, 26%, 132px); aspect-ratio: 1;
+  color: var(--brand);
+}
+.stamp svg { width: 100%; height: 100%; overflow: visible; }
+.stamp text { font-family: var(--font-body); font-weight: 600; font-size: 9.6px; letter-spacing: .12em; fill: currentColor; }
+.stamp-ring { animation: spin 48s linear infinite; transform-origin: 60px 60px; }
+@keyframes spin { to { transform: rotate(1turn); } }
+.cake { animation: rise .7s var(--ease) .1s both; }
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } }
+
+/* Arcade frieze */
+.frieze {
+  height: 34px;
+  background: var(--surface-2);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 34'%3E%3Cpath fill-rule='evenodd' d='M0 0h40v34H0z M12 28V17a8 8 0 0 1 16 0v11z'/%3E%3C/svg%3E") repeat-x left bottom / 40px 34px;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 34'%3E%3Cpath fill-rule='evenodd' d='M0 0h40v34H0z M12 28V17a8 8 0 0 1 16 0v11z'/%3E%3C/svg%3E") repeat-x left bottom / 40px 34px;
+}
+.frieze--brand {
+  height: 26px;
+  background: var(--brand);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 26'%3E%3Cpath fill-rule='evenodd' d='M0 0h40v26H0z M10 26V14a10 10 0 0 1 20 0v12z'/%3E%3C/svg%3E") repeat-x left bottom / 40px 26px;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 26'%3E%3Cpath fill-rule='evenodd' d='M0 0h40v26H0z M10 26V14a10 10 0 0 1 20 0v12z'/%3E%3C/svg%3E") repeat-x left bottom / 40px 26px;
+}
+
+/* ── Proof ── */
+.proof { background: var(--surface-2); }
+.proof-grid { display: grid; gap: var(--space-6); }
+.score { display: grid; justify-items: start; gap: var(--space-3); }
+.score-num {
+  font-family: var(--font-display); font-weight: 500;
+  font-size: clamp(7.5rem, 34vw, 15rem); line-height: .82; letter-spacing: -0.06em;
+  color: var(--brand);
+  padding-bottom: .1em;
+}
+.score .stars .i { width: 28px; height: 28px; }
+.score-cap { font-size: var(--step--1); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+.proof-copy h2 { margin-top: var(--space-4); font-size: var(--step-4); }
+.proof-copy > p { margin-top: var(--space-4); max-width: 52ch; color: var(--ink-soft); }
+.link-arrow {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 48px; margin-top: var(--space-5);
+  font-weight: 600; color: var(--brand); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 5px;
+}
+.link-arrow .i { transition: transform .25s var(--ease); }
+.link-arrow:hover .i { transform: translate(3px, -3px); }
+.press { margin-top: var(--space-7); }
+.press h3 { font-family: var(--font-body); font-size: var(--step--1); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+.press ul { margin-top: var(--space-3); border-bottom: 1px solid var(--line); }
+.press a {
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 4px 16px;
+  padding: 18px 0; border-top: 1px solid var(--line); text-decoration: none;
+}
+.press strong { font-family: var(--font-display); font-weight: 500; font-size: var(--step-2); line-height: 1.15; }
+.press span { grid-column: 1; color: var(--ink-soft); font-size: 1rem; }
+.press .i { grid-row: 1 / span 2; grid-column: 2; color: var(--brand); transition: transform .25s var(--ease); }
+.press a:hover .i { transform: translate(3px, -3px); }
+
+/* ── The cake ── */
+.cake-head { display: grid; gap: var(--space-5); }
+.cake-head h2 { margin-top: var(--space-4); font-size: var(--step-4); }
+.cake-head h2 em { font-weight: 400; color: var(--brand); }
+.cake-head p { max-width: 54ch; color: var(--ink-soft); }
+.offer { display: grid; gap: var(--space-5); margin-top: var(--space-8); }
+.offer h3 { font-size: var(--step-4); font-style: italic; font-weight: 400; letter-spacing: -0.03em; }
+.offer-sub { margin-top: var(--space-2); color: var(--ink-soft); }
+.list-label { margin-top: var(--space-6); font-size: var(--step--1); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+.flavours { display: flex; flex-wrap: wrap; gap: 2px 0; margin-top: var(--space-3); }
+.flavours li {
+  font-family: var(--font-display); font-size: var(--step-3); line-height: 1.25; letter-spacing: -0.02em;
+}
+.flavours li:not(:last-child)::after { content: "·"; margin-inline: .32em; color: var(--brand); }
+.sweet { padding-block: var(--space-2); }
+.savory {
+  padding: var(--space-6) var(--space-5);
+  border-radius: var(--r-lg); background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow-1);
+}
+.savory ul { margin-top: var(--space-5); }
+.savory li {
+  display: flex; align-items: baseline; gap: 12px; padding: 10px 0; border-bottom: 1px dashed var(--line);
+  font-family: var(--font-display); font-size: var(--step-2); line-height: 1.2;
+}
+.savory li::before { content: ""; width: 7px; height: 7px; flex: none; transform: translateY(-.2em) rotate(45deg); background: var(--accent); }
+.savory .aside { margin-top: var(--space-5); font-style: italic; color: var(--ink-soft); }
+.festive {
+  position: relative; overflow: hidden;
+  display: grid; gap: var(--space-5);
+  padding: var(--space-6) var(--space-5);
+  border-radius: var(--r-lg); background: var(--ink); color: var(--brand-ink);
+}
+.festive .eyebrow { color: var(--accent-light); }
+.festive h3 { margin-top: var(--space-3); color: var(--brand-ink); }
+.festive .offer-sub { color: #E3D2BF; }
+.festive ul { display: grid; gap: 8px; align-content: center; }
+.festive li { font-family: var(--font-display); font-size: var(--step-2); line-height: 1.2; color: var(--accent-light); }
+.festive svg { position: absolute; right: -56px; bottom: -84px; width: 220px; height: auto; color: rgb(242 201 138 / .07); pointer-events: none; }
+.festive > *:not(svg) { position: relative; }
+.cake-note {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4) var(--space-6);
+  margin-top: var(--space-7); padding-top: var(--space-6); border-top: 1px solid var(--line);
+}
+.cake-note p { max-width: 48ch; font-size: var(--step-1); }
+
+/* ── Story (brick band) ── */
+.story { background: var(--brand); color: var(--brand-ink); }
+.story .eyebrow { color: var(--accent-light); }
+.story-grid { display: grid; gap: var(--space-7); }
+.story h2 { margin-top: var(--space-4); font-size: var(--step-4); }
+.story-intro p { margin-top: var(--space-5); max-width: 40ch; font-size: var(--step-1); color: #F3DCC0; }
+.timeline li {
+  display: grid; gap: var(--space-2);
+  padding-block: var(--space-5); border-top: 1px solid rgb(251 243 230 / .28);
+}
+.timeline li:last-child { border-bottom: 1px solid rgb(251 243 230 / .28); }
+.timeline .year { font-family: var(--font-display); font-size: var(--step-3); line-height: 1; letter-spacing: -0.02em; color: var(--accent-light); }
+.timeline .year small { display: block; margin-bottom: 6px; font-family: var(--font-body); font-size: var(--step--1); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+.timeline p { max-width: 46ch; }
+.maker {
+  display: grid; gap: var(--space-4);
+  margin-top: var(--space-8); padding: var(--space-6) var(--space-5);
+  border-radius: var(--r-lg); background: rgb(43 26 18 / .2);
+}
+.maker .label { font-size: var(--step--1); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-light); }
+.maker p:not(.label) { font-family: var(--font-display); font-size: var(--step-2); line-height: 1.3; letter-spacing: -0.01em; }
+.maker em { font-weight: 400; }
+
+/* ── Visit: hours + map ── */
+.visit-head h2 { margin-top: var(--space-4); font-size: var(--step-4); }
+.visit-head p { margin-top: var(--space-4); color: var(--ink-soft); max-width: 50ch; }
+.visit-grid { display: grid; gap: var(--space-5); margin-top: var(--space-7); }
+.hours-card, .map-card {
+  border-radius: var(--r-lg); background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow-2);
+}
+.hours-card { padding: var(--space-5) var(--space-4); }
+.hours-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); padding-inline: var(--space-2); }
+.hours-top h3 { display: flex; align-items: center; gap: 10px; font-size: var(--step-2); }
+.hours-top h3 .i { color: var(--brand); width: 22px; height: 22px; }
+.hours { width: 100%; margin-top: var(--space-4); border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.hours th, .hours td { padding: 12px var(--space-2); text-align: left; border-top: 1px solid var(--line); }
+.hours th { font-weight: 600; }
+.hours td { text-align: right; white-space: nowrap; }
+.hours tr.is-closed td { color: var(--ink-soft); font-style: italic; }
+.hours tr.is-today th, .hours tr.is-today td { background: var(--brand-tint); color: var(--ink); }
+.hours tr.is-today th { border-radius: var(--r-sm) 0 0 var(--r-sm); }
+.hours tr.is-today td { border-radius: 0 var(--r-sm) var(--r-sm) 0; font-weight: 600; }
+.hours tr.is-today + tr th, .hours tr.is-today + tr td, .hours tr.is-today th, .hours tr.is-today td { border-top-color: transparent; }
+.today-tag {
+  display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 999px;
+  background: var(--brand); color: var(--brand-ink);
+  font-size: .75rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; vertical-align: 2px;
+}
+.hours-note { margin-top: var(--space-4); padding-inline: var(--space-2); font-size: 1rem; color: var(--ink-soft); }
+.map-card { display: grid; overflow: hidden; }
+.map-frame { position: relative; aspect-ratio: 4 / 3; background: var(--surface-2); }
+.map-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.map-info { display: grid; gap: var(--space-4); padding: var(--space-5); }
+.addr { display: flex; gap: 12px; }
+.addr .i { color: var(--brand); margin-top: 3px; }
+.addr strong { display: block; font-family: var(--font-display); font-weight: 500; font-size: var(--step-1); }
+.addr span { color: var(--ink-soft); }
+.map-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-5); }
+.map-actions .btn { flex: 1 1 auto; }
+.map-actions .link-arrow { margin-top: 0; }
+
+/* ── Contact + footer (chocolate) ── */
+.contact { background: var(--ink); color: var(--brand-ink); }
+.contact .eyebrow { color: var(--accent-light); }
+.contact-grid { display: grid; gap: var(--space-7); align-items: end; }
+.contact h2 { margin-top: var(--space-4); font-size: var(--step-4); }
+.contact-lede { margin-top: var(--space-4); color: #D9C8B6; }
+.big-phone {
+  display: inline-block; margin-top: var(--space-5);
+  font-family: var(--font-display); font-weight: 500; font-size: clamp(2.3rem, 9.6vw, 5.2rem); line-height: 1; letter-spacing: -0.03em;
+  color: var(--accent); text-decoration: none; white-space: nowrap;
+  background: linear-gradient(currentColor, currentColor) left bottom / 0 2px no-repeat; padding-bottom: 8px;
+}
+.big-phone:hover { background-size: 100% 2px; }
+.contact-actions { display: grid; gap: var(--space-3); }
+.contact-actions .btn { width: 100%; justify-content: flex-start; padding-inline: 22px; }
+.contact-actions .btn .i-trail { margin-left: auto; }
+
+.site-footer { background: var(--ink); color: #D9C8B6; padding-bottom: var(--space-7); }
+.footer-mark {
+  padding-top: var(--space-7); border-top: 1px solid rgb(251 243 230 / .14);
+  font-family: var(--font-display); font-weight: 500; font-size: clamp(3.2rem, 11.6vw, 10.4rem); line-height: .92; letter-spacing: -0.045em;
+  color: var(--brand-ink);
+}
+.footer-mark em { font-weight: 400; color: var(--accent); }
+.footer-grid { display: grid; gap: var(--space-5); margin-top: var(--space-7); font-size: 1rem; }
+.footer-grid h3 { font-family: var(--font-body); font-size: var(--step--1); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-light); margin-bottom: var(--space-2); }
+.footer-grid a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; text-decoration-color: rgb(217 200 182 / .4); text-underline-offset: 4px; }
+.footer-grid a:hover { color: var(--brand-ink); }
+.footer-base {
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3);
+  margin-top: var(--space-6); padding-top: var(--space-5); border-top: 1px solid rgb(251 243 230 / .14);
+  font-size: var(--step--1);
+}
+.footer-base a { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; text-decoration: none; }
+
+/* ── Mobile action bar ── */
+.action-bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 45;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+  background: var(--surface); border-top: 1px solid var(--line); box-shadow: var(--shadow-up);
+}
+.action-bar a {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  min-height: 56px; border-radius: var(--r-sm);
+  font-size: .875rem; font-weight: 600; text-decoration: none; color: var(--ink);
+  border: 1px solid var(--line); background: var(--bg);
+}
+.action-bar a.is-main { background: var(--brand); color: var(--brand-ink); border-color: var(--brand); }
+
+/* ── Reveal on scroll ── */
+.js .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
+.js .reveal.is-in { opacity: 1; transform: none; }
+
+/* ── ≥ 640 ── */
+@media (min-width: 640px) {
+  .hero-ctas .btn { flex: 0 0 auto; }
+  .savory { padding: var(--space-7) var(--space-6); }
+  .festive { grid-template-columns: 1fr 1fr; padding: var(--space-7) var(--space-6); align-items: end; }
+  .timeline li { grid-template-columns: 9rem 1fr; gap: var(--space-5); align-items: baseline; }
+  .maker { padding: var(--space-7) var(--space-6); }
+  .hours-card { padding: var(--space-6); }
+  .contact-actions { grid-template-columns: 1fr 1fr; }
+  .contact-actions .btn:first-child { grid-column: 1 / -1; }
+  .footer-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ── ≥ 768: header carries the CTA, no bottom bar ── */
+@media (min-width: 768px) {
+  body { padding-bottom: 0; }
+  .action-bar { display: none; }
+  .header-cta { display: inline-flex; }
+}
+
+/* ── ≥ 960 ── */
+@media (min-width: 960px) {
+  :root { --header-h: 76px; }
+  .nav-desktop { display: flex; gap: 28px; margin-right: var(--space-4); }
+  .menu-toggle, .menu { display: none; }
+  .hero { padding-block: var(--space-6) var(--space-9); }
+  .hero-grid { grid-template-columns: 1.05fr .95fr; gap: var(--space-8); min-height: min(calc(100svh - var(--header-h) - 64px), 720px); }
+  .hero-art { aspect-ratio: 1 / 1.04; }
+  .hero-arch { bottom: 26%; left: 13%; right: 13%; }
+  .proof-grid { grid-template-columns: 5fr 7fr; gap: var(--space-8); align-items: start; }
+  .score { position: sticky; top: calc(var(--header-h) + 32px); }
+  .cake-head { grid-template-columns: 7fr 5fr; gap: var(--space-8); align-items: end; }
+  .offer { grid-template-columns: 7fr 5fr; gap: var(--space-6) var(--space-8); }
+  .flavours li { font-size: clamp(2.4rem, 1.1rem + 2.2vw, 3.3rem); line-height: 1.2; }
+  .festive svg { right: -40px; bottom: -60px; width: 280px; }
+  .festive { grid-column: 1 / -1; grid-template-columns: 7fr 5fr; gap: var(--space-8); padding: var(--space-8); }
+  .story-grid { grid-template-columns: 5fr 7fr; gap: var(--space-8); }
+  .story-intro { position: sticky; top: calc(var(--header-h) + 32px); align-self: start; }
+  .maker { grid-template-columns: 12rem 1fr; gap: var(--space-6); align-items: baseline; padding: var(--space-7) var(--space-8); }
+  .visit-head { display: grid; grid-template-columns: 7fr 5fr; gap: var(--space-8); align-items: end; }
+  .visit-grid { grid-template-columns: 5fr 7fr; gap: var(--space-6); }
+  .map-card { grid-template-rows: 1fr auto; }
+  .map-frame { aspect-ratio: auto; min-height: 340px; }
+  .contact-grid { grid-template-columns: 7fr 5fr; gap: var(--space-8); }
+  .footer-grid { grid-template-columns: 2fr 2fr 1fr; }
+}
+
+@media (min-width: 1200px) {
+  .hero h1 { font-size: 5.6rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .js .reveal { opacity: 1; transform: none; }
+}
+</style>
+<!--sf:preview--><meta name="robots" content="noindex, nofollow"><!--/sf:preview-->
+<!--sf:og--><meta property="og:image" content="https://l-augustin-nimois-nimes.aymenjallouli.dev/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:url" content="https://l-augustin-nimois-nimes.aymenjallouli.dev/"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://l-augustin-nimois-nimes.aymenjallouli.dev/og.jpg"><!--/sf:og-->
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-sms" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></symbol>
+  <symbol id="i-nav" viewBox="0 0 24 24"><path d="M3 11l19-9-9 19-2-8-8-2z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17L17 7M8 7h9v9"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M12 7v5l3.5 2"/></symbol>
+  <symbol id="i-fb" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.6l2.85 5.9 6.45.9-4.7 4.5 1.15 6.4L12 17.2l-5.75 3.1 1.15-6.4-4.7-4.5 6.45-.9z"/></symbol>
+  <symbol id="i-mark" viewBox="0 0 40 40"><rect width="40" height="40" rx="11" fill="#A23A1E"/><path d="M10.5 31V19.5a9.5 9.5 0 0 1 19 0V31" fill="none" stroke="#FBF3E6" stroke-width="2.4"/><path d="M16 31v-8.5a4 4 0 0 1 8 0V31" fill="none" stroke="#FBF3E6" stroke-width="2.4"/></symbol>
+</svg>
+
+<a class="skip" href="#main">Aller au contenu</a>
+
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <a class="brand" href="#top" aria-label="L'Augustin Nîmois, retour en haut de page">
+      <svg aria-hidden="true"><use href="#i-mark"/></svg>
+      <span>L'Augustin <em>Nîmois</em></span>
+    </a>
+    <nav class="nav-desktop" aria-label="Navigation principale">
+      <a href="#gateau">Le gâteau</a>
+      <a href="#histoire">L'histoire</a>
+      <a href="#horaires">Horaires et accès</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-primary header-cta" href="tel:+33785858812"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>07 85 85 88 12</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Ouvrir le menu">
+      <svg class="i i-open" aria-hidden="true"><use href="#i-menu"/></svg>
+      <svg class="i i-close" aria-hidden="true"><use href="#i-close"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="menu" id="menu">
+  <nav aria-label="Menu mobile">
+    <a href="#avis">Avis <span>I</span></a>
+    <a href="#gateau">Le gâteau <span>II</span></a>
+    <a href="#histoire">L'histoire <span>III</span></a>
+    <a href="#horaires">Horaires et accès <span>IV</span></a>
+    <a href="#contact">Contact <span>V</span></a>
+  </nav>
+  <div class="menu-foot">
+    <p class="status" data-status><span class="dot"></span><span data-status-text>Halles de Nîmes, allée du Cumin</span></p>
+    <a class="btn btn-primary" href="tel:+33785858812"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Appeler le 07 85 85 88 12</a>
+  </div>
+</div>
+
+<main id="main">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="status" data-status><span class="dot"></span><span data-status-text>Halles de Nîmes, allée du Cumin</span></p>
+        <h1 id="hero-title">Les Arènes de Nîmes, <em>moulées en gâteau.</em></h1>
+        <p class="lede"><strong>L'Augustin Nîmois</strong>, c'est un gâteau en forme d'amphithéâtre, sucré ou salé. Vous le trouverez au stand des Halles de Nîmes, allée du Cumin.</p>
+        <a class="rating-chip" href="https://www.google.com/maps/place/?q=place_id:ChIJJZuZufMttBIREHu3H1Rm8Fo" target="_blank" rel="noopener" aria-label="Note Google : 5,0 sur 5, 12 avis. Voir les avis sur Google">
+          <span class="stars" aria-hidden="true"><svg class="i i-fill"><use href="#i-star"/></svg><svg class="i i-fill"><use href="#i-star"/></svg><svg class="i i-fill"><use href="#i-star"/></svg><svg class="i i-fill"><use href="#i-star"/></svg><svg class="i i-fill"><use href="#i-star"/></svg></span>
+          <span><strong>5,0</strong> · 12 avis Google</span>
+        </a>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="tel:+33785858812"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Appeler le stand</a>
+          <a class="btn btn-ghost" href="https://www.google.com/maps/dir/?api=1&amp;destination=L'Augustin%20N%C3%AEmois%2C%20All%C3%A9e%20du%20Cumin%2C%20Rue%20Guizot%2C%2030000%20N%C3%AEmes" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-nav"/></svg>Itinéraire</a>
+        </div>
+      </div>
+
+      <div class="hero-art" aria-hidden="true">
+        <div class="hero-arch"></div>
+        <svg class="cake" viewBox="0 0 600 420" width="600" height="420" focusable="false"><defs>
+<linearGradient id="ck-wall" x1="38" x2="562" y1="0" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#7a421d"/><stop offset=".2" stop-color="#b57638"/><stop offset=".42" stop-color="#dba660"/><stop offset=".62" stop-color="#c88c48"/><stop offset=".86" stop-color="#9c602b"/><stop offset="1" stop-color="#6f3b19"/></linearGradient>
+<linearGradient id="ck-shade" x1="0" x2="0" y1="112" y2="392" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3a1e0c" stop-opacity="0"/><stop offset="1" stop-color="#3a1e0c" stop-opacity=".28"/></linearGradient>
+<radialGradient id="ck-glaze" cx=".42" cy=".38" r=".7"><stop offset="0" stop-color="#c94a3c"/><stop offset=".6" stop-color="#a12d25"/><stop offset="1" stop-color="#6e1a16"/></radialGradient>
+<radialGradient id="ck-ground" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#2b1a12" stop-opacity=".32"/><stop offset="1" stop-color="#2b1a12" stop-opacity="0"/></radialGradient>
+</defs><ellipse cx="300" cy="334" rx="282.96000000000004" ry="79.8" fill="url(#ck-ground)"/><path d="M38 112V308A262 84 0 0 0 562 308V112Z" fill="url(#ck-wall)"/><path class="ck-arches" d="M556.6 221V170A1.9 11 0 0 1 560.4 162.2V213.2ZM545.1 233.7V182.7A3.8 11 0 0 1 552.7 175.2V226.2ZM527.6 245.6V194.6A5.6 11 0 0 1 538.8 187.6V238.6ZM504.5 256.5V205.5A7.3 11 0 0 1 519 199.1V250.1ZM476.3 266.1V215.1A8.7 11 0 0 1 493.8 209.5V260.5ZM443.8 274.2V223.2A10 11 0 0 1 463.8 218.6V269.6ZM407.8 280.6V229.6A11 11 0 0 1 429.8 226V277ZM369.1 285V234A11.7 11 0 0 1 392.6 231.6V282.6ZM328.8 287.5V236.5A12.2 11 0 0 1 353.1 235.3V286.3ZM287.7 287.9V236.9A12.3 11 0 0 1 312.3 236.9V287.9ZM246.9 286.3V235.3A12.2 11 0 0 1 271.2 236.5V287.5ZM207.4 282.6V231.6A11.7 11 0 0 1 230.9 234V285ZM170.2 277V226A11 11 0 0 1 192.2 229.6V280.6ZM136.2 269.6V218.6A10 11 0 0 1 156.2 223.2V274.2ZM106.2 260.5V209.5A8.7 11 0 0 1 123.7 215.1V266.1ZM81 250.1V199.1A7.3 11 0 0 1 95.5 205.5V256.5ZM61.2 238.6V187.6A5.6 11 0 0 1 72.4 194.6V245.6ZM47.3 226.2V175.2A3.8 11 0 0 1 54.9 182.7V233.7ZM39.6 213.2V162.2A1.9 11 0 0 1 43.4 170V221ZM556.6 311V259A1.9 12 0 0 1 560.4 251.2V303.2ZM545.1 323.7V271.7A3.8 12 0 0 1 552.7 264.2V316.2ZM527.6 335.6V283.6A5.6 12 0 0 1 538.8 276.6V328.6ZM504.5 346.5V294.5A7.3 12 0 0 1 519 288.1V340.1ZM476.3 356.1V304.1A8.7 12 0 0 1 493.8 298.5V350.5ZM443.8 364.2V312.2A10 12 0 0 1 463.8 307.6V359.6ZM407.8 370.6V318.6A11 12 0 0 1 429.8 315V367ZM369.1 375V323A11.7 12 0 0 1 392.6 320.6V372.6ZM328.8 377.5V325.5A12.2 12 0 0 1 353.1 324.3V376.3ZM287.7 377.9V325.9A12.3 12 0 0 1 312.3 325.9V377.9ZM246.9 376.3V324.3A12.2 12 0 0 1 271.2 325.5V377.5ZM207.4 372.6V320.6A11.7 12 0 0 1 230.9 323V375ZM170.2 367V315A11 12 0 0 1 192.2 318.6V370.6ZM136.2 359.6V307.6A10 12 0 0 1 156.2 312.2V364.2ZM106.2 350.5V298.5A8.7 12 0 0 1 123.7 304.1V356.1ZM81 340.1V288.1A7.3 12 0 0 1 95.5 294.5V346.5ZM61.2 328.6V276.6A5.6 12 0 0 1 72.4 283.6V335.6ZM47.3 316.2V264.2A3.8 12 0 0 1 54.9 271.7V323.7ZM39.6 303.2V251.2A1.9 12 0 0 1 43.4 259V311Z" fill="#3a2216"/><path d="M38 112V308A262 84 0 0 0 562 308V112Z" fill="url(#ck-shade)"/><g fill="none" stroke="#f1d3a2" stroke-linecap="round"><path d="M38 126A262 84 0 0 0 562 126" stroke-width="2" opacity=".75"/><path d="M38 215A262 84 0 0 0 562 215" stroke-width="4" opacity=".9"/><path d="M38 222A262 84 0 0 0 562 222" stroke-width="1.5" opacity=".55"/><path d="M38 301A262 84 0 0 0 562 301" stroke-width="3" opacity=".7"/></g><ellipse cx="300" cy="112" rx="262" ry="84" fill="#e8bb78" stroke="#b47a3c" stroke-width="1.5"/><ellipse cx="300" cy="115" rx="241" ry="77.3" fill="#d9a462" stroke="#b47a3c" stroke-opacity=".45"/><ellipse cx="300" cy="117.6" rx="222.7" ry="71.4" fill="#e4b472" stroke="#b47a3c" stroke-opacity=".45"/><ellipse cx="300" cy="120.2" rx="204.4" ry="65.5" fill="#d9a462" stroke="#b47a3c" stroke-opacity=".45"/><ellipse cx="300" cy="122.8" rx="186" ry="59.6" fill="#e4b472" stroke="#b47a3c" stroke-opacity=".45"/><ellipse cx="300" cy="125.4" rx="167.7" ry="53.8" fill="#d9a462" stroke="#b47a3c" stroke-opacity=".45"/><ellipse class="ck-glaze" cx="300" cy="130" rx="149.3" ry="47.9" fill="url(#ck-glaze)"/><ellipse cx="255.2" cy="113.2" rx="56.7" ry="8.6" fill="#fff" opacity=".22"/><path d="M56 94A244 66 0 0 1 340 29" fill="none" stroke="#fff3dc" stroke-width="2" stroke-linecap="round" opacity=".55"/></svg>
+        <div class="stamp">
+          <svg viewBox="0 0 120 120" focusable="false">
+            <circle cx="60" cy="60" r="58" fill="#FBF7F0" stroke="currentColor" stroke-width="1.2"/>
+            <circle cx="60" cy="60" r="34" fill="none" stroke="currentColor" stroke-opacity=".35"/>
+            <path id="stamp-circle" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0" fill="none"/>
+            <g class="stamp-ring"><text><textPath href="#stamp-circle" textLength="272" lengthAdjust="spacing">HALLES DE NÎMES · ALLÉE DU CUMIN ·</textPath></text></g>
+            <path d="M48 74V58a12 12 0 0 1 24 0v16M54.5 74V62a5.5 5.5 0 0 1 11 0v12" fill="none" stroke="currentColor" stroke-width="2.2"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="frieze" aria-hidden="true"></div>
+
+  <section class="section proof" id="avis" aria-labelledby="avis-title">
+    <div class="container proof-grid">
+      <div class="score reveal">
+        <p class="score-num" aria-hidden="true">5,0</p>
+        <span class="stars" aria-hidden="true"><svg class="i i-fill"><use href="#i-star"/></svg><svg class="i i-fill"><use href="#i-star"/></svg><svg class="i i-fill"><use href="#i-star"/></svg><svg class="i i-fill"><use href="#i-star"/></svg><svg class="i i-fill"><use href="#i-star"/></svg></span>
+        <p class="score-cap">Note moyenne sur Google</p>
+      </div>
+      <div class="proof-copy reveal">
+        <p class="eyebrow">I · Avis Google</p>
+        <h2 id="avis-title">Douze avis Google, cinq étoiles de moyenne.</h2>
+        <p>Une note pleine pour un stand ouvert à l'automne 2025. Les avis se lisent en entier sur la fiche Google de L'Augustin Nîmois.</p>
+        <a class="link-arrow" href="https://www.google.com/maps/place/?q=place_id:ChIJJZuZufMttBIREHu3H1Rm8Fo" target="_blank" rel="noopener">Voir les 12 avis sur Google<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <div class="press">
+          <h3>Ils en ont parlé</h3>
+          <ul>
+            <li><a href="https://www.ici.fr/emissions/bienvenue-chez-vous-le-magazine-ici-gard-lozere/l-augustin-de-nimes-l-embleme-gourmand-qui-reinvente-les-arenes-en-dessert-4301249" target="_blank" rel="noopener"><strong>ICI Gard Lozère</strong><span>Magazine « Bienvenue chez vous », décembre 2025</span><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+            <li><a href="https://www.objectifsud.fr/gard/nimes/nimes-lelegante-gourmandise-version-laugustin-nimois-155018.php" target="_blank" rel="noopener"><strong>Objectif Sud</strong><span>Le projet, à l'ouverture du stand aux Halles</span><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="gateau" aria-labelledby="gateau-title">
+    <div class="container">
+      <div class="cake-head reveal">
+        <div>
+          <p class="eyebrow">II · Le gâteau</p>
+          <h2 id="gateau-title">La forme ne change pas. <em>La garniture, si.</em></h2>
+        </div>
+        <p>Un gâteau nîmois moulé en forme des Arènes, l'amphithéâtre romain de la ville. Dessous, un moelleux (chocolat, citron…) ou une base façon crème brûlée, avec mousses, confitures, pralinés ou fruits rouges. Et il existe en salé.</p>
+      </div>
+
+      <div class="offer">
+        <div class="sweet reveal">
+          <h3>Sucré</h3>
+          <p class="offer-sub">Base moelleux ou façon crème brûlée.</p>
+          <p class="list-label">Parfums de moelleux déjà proposés</p>
+          <ul class="flavours">
+            <li>Marmelade</li><li>Framboise</li><li>Citron vert</li><li>Pistache</li><li>Noisette torréfiée</li><li>Praliné</li><li>Chocolat</li>
+          </ul>
+        </div>
+
+        <div class="savory reveal">
+          <h3>Salé</h3>
+          <p class="offer-sub">Le même moule, en version salée.</p>
+          <ul>
+            <li>Foie gras</li><li>Saumon</li><li>Brandade de morue</li><li>Olives</li><li>Lardons</li><li>Crème de courgette</li>
+          </ul>
+          <p class="aside">La brandade, forcément : on est à Nîmes.</p>
+        </div>
+
+        <div class="festive on-dark reveal">
+          <div>
+            <p class="eyebrow">Pour les fêtes de fin d'année</p>
+            <h3>Bûches XXL</h3>
+            <p class="offer-sub">De 6 à 8 parts.</p>
+          </div>
+          <ul>
+            <li>Forêt</li><li>Agrumes</li><li>Noisette-fruits rouges</li>
+          </ul>
+          <svg viewBox="0 0 120 120" aria-hidden="true" focusable="false"><path d="M14 120V56a46 46 0 0 1 92 0v64M38 120V66a22 22 0 0 1 44 0v54" fill="none" stroke="currentColor" stroke-width="10"/></svg>
+        </div>
+      </div>
+
+      <div class="cake-note reveal">
+        <p>Des chocolats aussi. Pour savoir ce qui est en vitrine aujourd'hui, le plus simple est d'appeler le stand.</p>
+        <a class="btn btn-primary" href="tel:+33785858812"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>07 85 85 88 12</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section story on-dark" id="histoire" aria-labelledby="histoire-title">
+    <div class="container">
+      <div class="story-grid">
+        <div class="story-intro reveal">
+          <p class="eyebrow">III · L'histoire</p>
+          <h2 id="histoire-title">Une idée de famille, née en 2019.</h2>
+          <p>Derrière le stand des Halles, il y a Tristan Tejero, jeune entrepreneur gardois, et un projet qui a commencé avec son frère.</p>
+        </div>
+        <ol class="timeline reveal">
+          <li><span class="year">2019</span><p>L'idée : un gâteau aux formes des Arènes de Nîmes, imaginé par le frère de Tristan et Rudy Aubert.</p></li>
+          <li><span class="year">2025</span><p>Tristan Tejero reprend le projet, avec le soutien de ses parents.</p></li>
+          <li><span class="year"><small>Automne</small>2025</span><p>Le stand ouvre aux Halles de Nîmes, allée du Cumin.</p></li>
+        </ol>
+      </div>
+      <div class="maker reveal">
+        <p class="label">Fabrication</p>
+        <p>En partenariat avec l'artisan pâtissier <em>Sébastien Marchetti</em> (Boulangerie Marchetti), avec des artisans locaux et des ingrédients du territoire.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="frieze frieze--brand" aria-hidden="true"></div>
+
+  <section class="section" id="horaires" aria-labelledby="horaires-title">
+    <div class="container">
+      <div class="visit-head reveal">
+        <div>
+          <p class="eyebrow">IV · Horaires et accès</p>
+          <h2 id="horaires-title">Le matin, aux Halles.</h2>
+        </div>
+        <p>Du mardi au dimanche, dès 7h30 ou 8h selon le jour. Fermé le lundi. Le stand se trouve à l'intérieur des Halles de Nîmes, allée du Cumin.</p>
+      </div>
+
+      <div class="visit-grid">
+        <div class="hours-card reveal">
+          <div class="hours-top">
+            <h3><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>Horaires</h3>
+            <p class="status" data-status><span class="dot"></span><span data-status-text>Horaires du stand</span></p>
+          </div>
+          <table class="hours">
+            <caption class="sr-only">Horaires d'ouverture du stand L'Augustin Nîmois</caption>
+            <tbody>
+              <tr data-day="1" data-hours="Fermé" class="is-closed"><th scope="row">Lundi</th><td>Fermé</td></tr>
+              <tr data-day="2" data-hours="08:00–12:30"><th scope="row">Mardi</th><td>8h – 12h30</td></tr>
+              <tr data-day="3" data-hours="08:00–12:30"><th scope="row">Mercredi</th><td>8h – 12h30</td></tr>
+              <tr data-day="4" data-hours="08:00–12:30"><th scope="row">Jeudi</th><td>8h – 12h30</td></tr>
+              <tr data-day="5" data-hours="07:30–13:30"><th scope="row">Vendredi</th><td>7h30 – 13h30</td></tr>
+              <tr data-day="6" data-hours="07:30–13:30"><th scope="row">Samedi</th><td>7h30 – 13h30</td></tr>
+              <tr data-day="0" data-hours="07:30–13:30"><th scope="row">Dimanche</th><td>7h30 – 13h30</td></tr>
+            </tbody>
+          </table>
+          <p class="hours-note">Heure de Nîmes. Le week-end, ouverture dès 7h30.</p>
+        </div>
+
+        <div class="map-card reveal">
+          <div class="map-frame">
+            <iframe src="https://www.google.com/maps?q=L'Augustin%20N%C3%AEmois%2C%20All%C3%A9e%20du%20Cumin%2C%20Rue%20Guizot%2C%2030000%20N%C3%AEmes&amp;output=embed" title="Plan : L'Augustin Nîmois aux Halles de Nîmes" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+          </div>
+          <div class="map-info">
+            <p class="addr"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg><span><strong>Halles de Nîmes</strong>Allée du Cumin, Rue Guizot<br>30000 Nîmes</span></p>
+            <div class="map-actions">
+              <a class="btn btn-primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=L'Augustin%20N%C3%AEmois%2C%20All%C3%A9e%20du%20Cumin%2C%20Rue%20Guizot%2C%2030000%20N%C3%AEmes" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-nav"/></svg>Itinéraire</a>
+              <a class="link-arrow" href="https://www.google.com/maps/place/?q=place_id:ChIJJZuZufMttBIREHu3H1Rm8Fo" target="_blank" rel="noopener">Ouvrir dans Google Maps<svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section contact on-dark" id="contact" aria-labelledby="contact-title">
+    <div class="container contact-grid">
+      <div class="reveal">
+        <p class="eyebrow">V · Contact</p>
+        <h2 id="contact-title">Une question sur les parfums du jour&nbsp;?</h2>
+        <p class="contact-lede">Appelez le stand ou envoyez un SMS.</p>
+        <a class="big-phone" href="tel:+33785858812" aria-label="Appeler le 07 85 85 88 12">07 85 85 88 12</a>
+      </div>
+      <div class="contact-actions reveal">
+        <a class="btn btn-light" href="tel:+33785858812"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Appeler<svg class="i i-trail" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-outline-light" href="sms:+33785858812?&amp;body=Bonjour%2C%20je%20souhaiterais%20un%20renseignement%20sur%20vos%20g%C3%A2teaux%20L%27Augustin.%20Merci."><svg class="i" aria-hidden="true"><use href="#i-sms"/></svg>SMS</a>
+        <a class="btn btn-outline-light" href="https://www.facebook.com/augustin.nimois/" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-fb"/></svg>Facebook</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer on-dark">
+  <div class="container">
+    <p class="footer-mark" aria-hidden="true">L'Augustin <em>Nîmois</em></p>
+    <div class="footer-grid">
+      <div>
+        <h3>Le stand</h3>
+        <p>Halles de Nîmes<br>Allée du Cumin, Rue Guizot, 30000 Nîmes</p>
+      </div>
+      <div>
+        <h3>Horaires</h3>
+        <p>Mardi au jeudi : 8h – 12h30<br>Vendredi au dimanche : 7h30 – 13h30<br>Fermé le lundi</p>
+      </div>
+      <div>
+        <h3>Suivre</h3>
+        <a href="https://www.facebook.com/augustin.nimois/" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-fb"/></svg>Facebook</a>
+      </div>
+    </div>
+    <div class="footer-base">
+      <p>© <span data-year></span> L'Augustin Nîmois · Pâtisserie artisanale à Nîmes</p>
+      <a href="#top">Haut de page<svg class="i" aria-hidden="true"><use href="#i-up"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<nav class="action-bar" aria-label="Actions rapides">
+  <a class="is-main" href="tel:+33785858812"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg>Appeler</a>
+  <a href="sms:+33785858812?&amp;body=Bonjour%2C%20je%20souhaiterais%20un%20renseignement%20sur%20vos%20g%C3%A2teaux%20L%27Augustin.%20Merci."><svg class="i" aria-hidden="true"><use href="#i-sms"/></svg>SMS</a>
+  <a href="https://www.google.com/maps/dir/?api=1&amp;destination=L'Augustin%20N%C3%AEmois%2C%20All%C3%A9e%20du%20Cumin%2C%20Rue%20Guizot%2C%2030000%20N%C3%AEmes" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-nav"/></svg>Itinéraire</a>
+</nav>
+
+<script>
+(function () {
+  var doc = document.documentElement;
+  doc.classList.add('js');
+
+  // Year
+  document.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
+
+  // Header shadow on scroll
+  var header = document.querySelector('.site-header');
+  var onScroll = function () { header.classList.toggle('is-scrolled', window.scrollY > 8); };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Mobile menu
+  var toggle = document.querySelector('.menu-toggle');
+  var menu = document.getElementById('menu');
+  var isOpen = false;
+  function setMenu(open, restoreFocus) {
+    isOpen = open;
+    menu.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    document.body.classList.toggle('menu-open', open);
+    if (open) { var first = menu.querySelector('a'); if (first) first.focus({ preventScroll: true }); }
+    else if (restoreFocus) toggle.focus();
+  }
+  toggle.addEventListener('click', function () { setMenu(!isOpen); });
+  menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && isOpen) setMenu(false, true); });
+  window.matchMedia('(min-width: 960px)').addEventListener('change', function (e) { if (e.matches && isOpen) setMenu(false); });
+
+  // Opening hours: today's row + live status (Nîmes time)
+  var DAYS = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+  function parse(raw) {
+    raw = String(raw || '').toLowerCase();
+    if (!raw || /ferm/.test(raw)) return [];
+    if (/24\s*h|24\/24|24 heures/.test(raw)) return [[0, 1440]];
+    var out = [];
+    raw.split(/[,;\/]| et /).forEach(function (part) {
+      var m = part.match(/(\d{1,2})\s*[:h.]?\s*(\d{2})?\s*[–—-]\s*(\d{1,2})\s*[:h.]?\s*(\d{2})?/);
+      if (!m) return;
+      var s = (+m[1]) * 60 + (+(m[2] || 0)), e = (+m[3]) * 60 + (+(m[4] || 0));
+      if (e <= s) e += 1440; // past midnight
+      out.push([s, e]);
+    });
+    return out.sort(function (a, b) { return a[0] - b[0]; });
+  }
+  function nowParis() {
+    var d = new Date();
+    try {
+      var p = {};
+      new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Paris', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })
+        .formatToParts(d).forEach(function (x) { p[x.type] = x.value; });
+      var wd = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(p.weekday);
+      if (wd > -1) return { day: wd, min: (+p.hour % 24) * 60 + (+p.minute) };
+    } catch (e) {}
+    return { day: d.getDay(), min: d.getHours() * 60 + d.getMinutes() };
+  }
+  function fmt(min) {
+    min = min % 1440;
+    var h = Math.floor(min / 60), m = min % 60;
+    return h + 'h' + (m ? (m < 10 ? '0' : '') + m : '');
+  }
+  var rows = document.querySelectorAll('tr[data-day]');
+  if (rows.length) {
+    var sched = {};
+    rows.forEach(function (r) { sched[+r.dataset.day] = parse(r.dataset.hours); });
+    var now = nowParis(), state = 'closed', label = '';
+    var today = sched[now.day] || [], yest = sched[(now.day + 6) % 7] || [];
+    var i, r;
+    for (i = 0; i < today.length; i++) {
+      r = today[i];
+      if (now.min >= r[0] && now.min < r[1]) { state = 'open'; label = r[1] - r[0] >= 1440 ? 'Ouvert maintenant · 24h/24' : 'Ouvert maintenant · ferme à ' + fmt(r[1]); }
+    }
+    for (i = 0; i < yest.length && state !== 'open'; i++) {
+      r = yest[i];
+      if (r[1] > 1440 && now.min + 1440 < r[1]) { state = 'open'; label = 'Ouvert maintenant · ferme à ' + fmt(r[1]); }
+    }
+    if (state !== 'open') {
+      label = 'Fermé';
+      search: for (var k = 0; k < 8; k++) {
+        var list = sched[(now.day + k) % 7] || [];
+        for (i = 0; i < list.length; i++) {
+          if (k === 0 && list[i][0] <= now.min) continue;
+          label = 'Fermé · ouvre ' + (k === 0 ? '' : k === 1 ? 'demain ' : DAYS[(now.day + k) % 7] + ' ') + 'à ' + fmt(list[i][0]);
+          break search;
+        }
+      }
+    }
+    document.querySelectorAll('[data-status]').forEach(function (el) {
+      el.setAttribute('data-state', state);
+      var t = el.querySelector('[data-status-text]');
+      if (t) t.textContent = label;
+    });
+    rows.forEach(function (row) {
+      if (+row.dataset.day !== now.day) return;
+      row.classList.add('is-today');
+      row.setAttribute('aria-current', 'date');
+      var tag = document.createElement('span');
+      tag.className = 'today-tag';
+      tag.textContent = "Aujourd'hui";
+      row.querySelector('th').appendChild(tag);
+    });
+  }
+
+  // Reveal on scroll (also catches anything jumped past by a fast scroll)
+  var items = [].slice.call(document.querySelectorAll('.reveal'));
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) items.forEach(function (el) { el.classList.add('is-in'); });
+  else {
+    var ticking = false;
+    var check = function () {
+      ticking = false;
+      var limit = window.innerHeight * 0.92;
+      items = items.filter(function (el) {
+        if (el.getBoundingClientRect().top < limit) { el.classList.add('is-in'); return false; }
+        return true;
+      });
+      if (!items.length) { window.removeEventListener('scroll', onReveal); window.removeEventListener('resize', onReveal); }
+    };
+    var onReveal = function () { if (!ticking) { ticking = true; requestAnimationFrame(check); } };
+    window.addEventListener('scroll', onReveal, { passive: true });
+    window.addEventListener('resize', onReveal);
+    check();
+  }
+})();
+</script>
+<!--sf:preview--><div style="padding:18px 16px;font:13px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;text-align:center;background:#0f0f10;color:#a3a3a8">Aperçu réalisé par Aymen Jallouli pour L'Augustin Nîmois : ce site n'est pas encore le site officiel de l'établissement.</div><!--/sf:preview-->
+<!--sf:track--><script>(function(){try{var q=new URLSearchParams(location.search),r=q.get('r')||sessionStorage.getItem('sf_r');if(!r)return;sessionStorage.setItem('sf_r',r);navigator.sendBeacon("https://track.aymenjallouli.dev/t"+'?r='+encodeURIComponent(r)+'&p='+encodeURIComponent(location.pathname));}catch(e){}})();</script><!--/sf:track-->
+</body>
+</html>
